@@ -1,4 +1,4 @@
- # 📊 From Raw to Ready — Adult Census Income
+ # 📊 From Raw to Ready Adult Census Income
 
 This project demonstrates the full **data cleaning, transformation, and exploratory data analysis (EDA)** process using the **UCI Adult Census Income dataset**.  
 The work was done entirely in **Python** with libraries such as **pandas, numpy, matplotlib, seaborn, and scikit-learn**.  
