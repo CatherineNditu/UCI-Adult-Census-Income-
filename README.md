@@ -1,12 +1,18 @@
-# From Raw to Ready — Adult Census Income  
+ # 📊 From Raw to Ready — Adult Census Income
 
-## 📌 Overview  
-This project audits, cleans, and transforms the **UCI Adult Census Income dataset** into an analysis-ready format.  
-The aim is to uncover socio-economic patterns affecting income (`<=50K` vs `>50K`) and provide:  
-- A clean dataset  
-- An EDA report with insights  
-- A reproducible processing pipeline  
+This project demonstrates the full **data cleaning, transformation, and exploratory data analysis (EDA)** process using the **UCI Adult Census Income dataset**.  
+The work was done entirely in **Python** with libraries such as **pandas, numpy, matplotlib, seaborn, and scikit-learn**.  
 
+The goal of this project was to transform raw census data into a clean, analysis-ready dataset and uncover socio-economic patterns related to income (<=50K vs >50K).  
+
+---
+
+## 🔧 Key Steps
+1. **Data Cleaning** — handling missing values, duplicates, and inconsistent categories.  
+2. **Exploratory Data Analysis (EDA)** — univariate, bivariate, and multivariate visualizations.  
+3. **Feature Engineering** — transformations such as encoding, scaling, and binning.  
+4. **Final Deliverables** — clean dataset (`adult_clean.csv`), insights, and reproducible pipeline.  
+ 
 ---
 
 ## 📊 Dataset  
