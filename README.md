@@ -15,7 +15,7 @@ The aim is to uncover socio-economic patterns affecting income (`<=50K` vs `>50K
 
 ---
 
-## 🛠️ Week 1: Data Loading & Basic Inspection  
+## 🛠️ Data Loading & Basic Inspection  
 
 We begin by loading the dataset, assigning column names, and running some initial inspection.  
 
@@ -55,6 +55,7 @@ print(df.info())
 
 # Summary statistics
 print(df.describe())
+
  age         workclass  fnlwgt  education  maritalstatus  \
 0   39         State-gov   77516  Bachelors             13   
 1   50  Self-emp-not-inc   83311  Bachelors             13   
@@ -118,13 +119,14 @@ min        1.000000
 50%       40.000000  
 75%       45.000000  
 max       99.000000  
-
+```
+---
 ## 🧹 Data Cleaning & Quality Audit
 
 In this phase, the dataset was cleaned by handling missing values, removing duplicates, standardizing categories, and detecting outliers. Basic transformations were applied to prepare the data for reliable analysis.
 
 ### 🔹 Code
-import numpy as np
+``` import numpy as np
 #Check missing values
 print("Missing values per column:")
 print(df.isnull().sum())
@@ -196,12 +198,15 @@ Outlier counts per numeric column:
 {'age': np.int64(143), 'fnlwgt': np.int64(992), 'maritalstatus': np.int64(1198), 'capital_gain': np.int64(2712), 'capital_loss': np.int64(1519), 'country': np.int64(9008)}
 
 New transformed columns added:log1p_capital_gain,log1p_capital_loss
+```
+---
 
 ## 📊 Exploratory Data Analysis (EDA)
 
 In this phase, univariate, bivariate, and multivariate analyses were performed to uncover patterns in the dataset. Visualizations such as histograms, bar plots, and heatmaps were used to highlight key relationships, leading to 5–8 insights about factors influencing income.
 
-import matplotlib.pyplot as plt
+### 🔹 Code
+```import matplotlib.pyplot as plt
 import seaborn as sns
 
 #Univariate analysis(numeric distribution)
@@ -250,9 +255,7 @@ plt.title("Correlation heatmap")
 plt.xticks(range(len(corr.columns)),corr.columns,rotation=90)
 plt.yticks(range(len(corr.columns)),corr.columns)
 plt.show()
-
-![Age Distribution](https://github.com/user-attachments/assets/d9c64fd9-0b5b-4f25-876b-58a5928a0ab1)
-
+```
 ![Income vs Education](https://github.com/user-attachments/assets/46b9139c-763f-45bf-b552-a409cfe46096)
 
 ![Income vs Occupation](https://github.com/user-attachments/assets/4bad9a8a-61dc-4f37-9085-5fb4a7741dcd)
@@ -270,3 +273,5 @@ plt.show()
 ![Hours per Week Distribution](https://github.com/user-attachments/assets/6a7105bf-b333-4557-946a-c4a90cb3ab33)
 
 ![Pairplot](https://github.com/user-attachments/assets/d921c20f-78c8-4440-92e2-ee7f95e5c3c0)
+
+
