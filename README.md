@@ -280,4 +280,82 @@ plt.show()
 
 ![Pairplot](https://github.com/user-attachments/assets/d921c20f-78c8-4440-92e2-ee7f95e5c3c0)
 
+##Encoding, Scaling & Feature Engineering
 
+- Applied Ordinal and One-Hot Encoding to handle categorical variables.
+- Used Standardization and Min-Max Scaling to normalize numerical features.
+- Performed simple feature engineering (e.g., grouping categories, creating new variables) to enhance predictive power.
+
+### 🔹 Code
+```
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler, MinMaxScaler
+from sklearn.pipeline import Pipeline
+import joblib
+import pandas as pd
+import numpy as np
+
+# Dataset URL
+DATA_URL= "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data"
+
+# Column names from UCI Adult dataset
+COLUMNS=[
+    "age","workclass","fnlwgt","education","maritalstatus","occupation","education_num","relationship","race","gender","capital_gain","capital_loss","country","income","hours_per_week"
+]
+
+#Load data
+df=pd.read_csv(DATA_URL,header=None,names=COLUMNS,na_values="?",skipinitialspace=True)
+
+
+# Feature Engineering
+df["age_bins"]=pd.cut(df["age"],bins=[0,25,35,45,55,65,100],labels=["<25","25-34","35-44","45-54","55-64","65+"],right=False)
+df["is_married"]=df["maritalstatus"].astype(str).str.contains("Married",na=False)
+df["has_capital_gain"]=df["capital_gain"]>0
+
+target="income"
+X=df.drop(columns=[target])
+y=(df[target]==">50K").astype(int)
+
+#Handle Missing values
+num_cols=df.select_dtypes(include="number").columns.tolist()
+cat_cols=[c for c in df.select_dtypes(exclude="number").columns if c!="income"]
+
+for c in cat_cols:
+  if df[c].isna().sum()>0:
+     df[c]=df[c].fillna(df[c].mode()[0])
+
+#Save clean csv
+df.to_csv("adult_clean.csv",index=False)
+print("Saved clean dataset:adult_clean.csv")
+
+#Define target and features
+target="income"
+X=df.drop(columns=[target])
+y=(df[target]==">50K").astype(int)
+
+#ordinal encoding for education
+education_order=["Preschool","1st-4th","5th-6th","7th-8th","HS-grad","9th","10th","11th","12th","Assoc-voc", "Assoc-acdm","Some-college","Bachelors","Masters","Prof-school","Doctorate"]
+
+numeric_features=X.select_dtypes(include="number").columns.tolist()
+ordinal_features=["education"]
+onehot_features=[c for c in X.select_dtypes(exclude=["number", "category"]).columns if c not in ordinal_features]
+
+#Transformer of columns
+preprocessor=ColumnTransformer(transformers=[("num",StandardScaler(),numeric_features),("num_minmax",MinMaxScaler(),numeric_features),("ord",OrdinalEncoder(categories=[education_order],handle_unknown="use_encoded_value",unknown_value=len(education_order)),ordinal_features),("cat",OneHotEncoder(handle_unknown="ignore",sparse_output=False),onehot_features),])
+
+#Pipeline
+pipeline=Pipeline(steps=[("preprocessor",preprocessor)])
+pipeline.fit(X,y)
+
+#Saving of pipeline
+joblib.dump(pipeline,"adult_pipeline.joblib")
+print("Saved pipeline:adult_pipeline.joblib")
+
+#Testing;Transforming of the first 5 rows
+Xt=pipeline.transform(X.head())
+print("Transformed shape",Xt.shape)
+
+Saved clean dataset:adult_clean.csv
+Saved pipeline:adult_pipeline.joblib
+Transformed shape (5, 60)
+```
